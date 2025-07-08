@@ -5,6 +5,8 @@ import dotenv from 'dotenv';
 import path from 'path';
 import url from 'url';
 import loggerUtil from './utils/logger.js';
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "./swagger_output.json" assert { type: "json" };
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const dirname = path.resolve(__dirname, "./");
@@ -24,6 +26,9 @@ app.use(cors({
 }));
 
 app.use('/api', routes);
+app.use('/api-docs', swaggerUi.serveFiles(swaggerDocument), swaggerUi.setup(swaggerDocument, {
+  customSiteTitle: 'Guest Book API Doc',
+}));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })

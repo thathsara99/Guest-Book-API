@@ -11,6 +11,10 @@ import fs from 'fs';
 
 //Register Any User
 const registerUser = WithSession(async (req, res, next, session) => {
+  /*
+    #swagger.tags = ['User']
+    #swagger.description = 'Register User'
+  */
   const {
     firstName,
     lastName,
@@ -32,7 +36,10 @@ const registerUser = WithSession(async (req, res, next, session) => {
 
 //Update User
 const updateUser = CatchAsync(async (req, res, next) => {
-  
+  /*
+    #swagger.tags = ['User']
+    #swagger.description = 'Update User'
+  */
   const { id } = req.params;
   const user = await User.findById(id);
   if (!user) {
@@ -53,7 +60,11 @@ const updateUser = CatchAsync(async (req, res, next) => {
 }, 'UserController - updateUser');
 
 // Update User Status
-const updateUserStatus = CatchAsync(async (req, res, next) => {
+const updateUserStatus = CatchAsync(async (req, res, next) => { 
+  /*
+    #swagger.tags = ['User']
+    #swagger.description = 'Update User Status'
+  */
   const { id } = req.params;
   const { status } = req.body;
 
@@ -76,6 +87,10 @@ const updateUserStatus = CatchAsync(async (req, res, next) => {
 }, 'UserController - updateUserStatus');
 
 const deleteUser = CatchAsync(async (req, res, next) => {
+  /*
+    #swagger.tags = ['User']
+    #swagger.description = 'Delete User'
+  */
   const { id } = req.params;
 
   const user = await User.findById(id);
@@ -91,6 +106,10 @@ const deleteUser = CatchAsync(async (req, res, next) => {
 }, 'UserController - deleteUser');
 
 const getUserProfilePicture = CatchAsync(async (req, res, next) => {
+  /*
+    #swagger.tags = ['User']
+    #swagger.description = 'Get User Profile Picture'
+  */
   const { id } = req.params;
 
   const user = await User.findById(id).select('profilePicture');
@@ -104,7 +123,6 @@ const getUserProfilePicture = CatchAsync(async (req, res, next) => {
   });
 }, 'UserController - getUserProfilePicture');
 
-// Multer setup for profile picture upload
 const uploadProfilePic = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
@@ -117,7 +135,11 @@ const uploadProfilePic = multer({
   }
 });
 
-const uploadUserProfilePicture = CatchAsync(async (req, res, next) => {
+const uploadUserProfilePicture = CatchAsync(async (req, res, next) => {   
+  /*
+    #swagger.tags = ['User']
+    #swagger.description = 'Upload User Profile Picture'
+  */
   const { id } = req.params;
   if (!req.file) {
     return next(new AppError('Image file is required.', 400));
@@ -139,6 +161,10 @@ const uploadUserProfilePicture = CatchAsync(async (req, res, next) => {
 }, 'UserController - uploadUserProfilePicture');
 
 const getUserById = CatchAsync(async (req, res, next) => {
+  /*
+    #swagger.tags = ['User']
+    #swagger.description = 'Get User By Id'
+  */
   const { id } = req.params;
 
   const user = await User.findById(id).select('-password -__v');

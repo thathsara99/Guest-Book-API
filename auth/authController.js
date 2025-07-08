@@ -11,6 +11,10 @@ import crypto from 'crypto';
 
 //Login Api
 const login = CatchAsync(async (req, res, next) => {
+  /*
+    #swagger.tags = ['Auth']
+    #swagger.description = 'Login'
+  */
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -82,7 +86,11 @@ const login = CatchAsync(async (req, res, next) => {
 }, 'AuthController - Login');
 
 // Active User
-const activateUser = CatchAsync(async (req, res, next) => {
+const activateUser = CatchAsync(async (req, res, next) => { 
+  /*
+    #swagger.tags = ['Auth']
+    #swagger.description = 'Activate User'
+  */
   const { email } = req.query;
 
   if (!email) {
@@ -106,6 +114,10 @@ const activateUser = CatchAsync(async (req, res, next) => {
 
 // Forgot Password API (JWT-based)
 const forgotPassword = CatchAsync(async (req, res, next) => {
+  /*
+    #swagger.tags = ['Auth']
+    #swagger.description = 'Forgot Password'
+  */
   const { email } = req.body;
   if (!email) {
     return next(new AppError('Email is required.', 400));
@@ -136,6 +148,10 @@ const forgotPassword = CatchAsync(async (req, res, next) => {
 
 // Reset Password API 
 const resetPassword = CatchAsync(async (req, res, next) => {
+  /*
+    #swagger.tags = ['Auth']
+    #swagger.description = 'Reset Password'
+  */
   const { token } = req.params;
   const { password, confirmPassword } = req.body;
   if (!password || !confirmPassword) {

@@ -5,6 +5,10 @@ import AppError from '../utils/AppError.js';
 
 //dashboard Counts
 const getDashboardStats = CatchAsync(async (req, res, next) => {
+  /*
+    #swagger.tags = ['Dashboard']
+    #swagger.description = 'Get Dashboard Stats'
+  */
   // Get today date
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -44,7 +48,11 @@ const getDashboardStats = CatchAsync(async (req, res, next) => {
 }, 'DashboardController - getDashboardStats');
 
 //all posts
-const getAllPosts = CatchAsync(async (req, res, next) => {
+const getAllPosts = CatchAsync(async (req, res, next) => {  
+  /*
+    #swagger.tags = ['Dashboard']
+    #swagger.description = 'Get All Posts'
+  */
   const posts = await Post.find()
     .select('-comments')
     .populate('uploadedBy', 'firstName lastName email')
@@ -80,7 +88,7 @@ const getAllComments = CatchAsync(async (req, res, next) => {
     });
   });
 
-  // Sort comments by creation date (newest first)
+  // Sorting comments
   allComments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   return res.status(200).send({
@@ -89,8 +97,12 @@ const getAllComments = CatchAsync(async (req, res, next) => {
   });
 }, 'DashboardController - getAllComments');
 
-// Delete a post
+// Delete post
 const deletePost = CatchAsync(async (req, res, next) => {
+  /*
+    #swagger.tags = ['Dashboard']
+    #swagger.description = 'Delete Post'
+  */
   const { postId } = req.params;
 
   const post = await Post.findById(postId);
@@ -106,7 +118,11 @@ const deletePost = CatchAsync(async (req, res, next) => {
 }, 'DashboardController - deletePost');
 
 // Delete a comment
-const deleteComment = CatchAsync(async (req, res, next) => {
+const deleteComment = CatchAsync(async (req, res, next) => {        
+  /*
+    #swagger.tags = ['Dashboard']
+    #swagger.description = 'Delete Comment'
+  */
   const { postId, commentId } = req.params;
 
   const post = await Post.findById(postId);
@@ -129,6 +145,10 @@ const deleteComment = CatchAsync(async (req, res, next) => {
 
 // Update post status (approve/reject)
 const updatePostStatus = CatchAsync(async (req, res, next) => {
+  /*
+    #swagger.tags = ['Dashboard']
+    #swagger.description = 'Update Post Status'
+  */
   const { postId } = req.params;
   const { status } = req.body;
 
@@ -150,8 +170,12 @@ const updatePostStatus = CatchAsync(async (req, res, next) => {
   });
 }, 'DashboardController - updatePostStatus');
 
-// Update comment status (approve/reject)
-const updateCommentStatus = CatchAsync(async (req, res, next) => {
+// Update comment status
+const updateCommentStatus = CatchAsync(async (req, res, next) => {  
+  /*
+    #swagger.tags = ['Dashboard']
+    #swagger.description = 'Update Comment Status'
+  */
   const { postId, commentId } = req.params;
   const { status } = req.body;
 

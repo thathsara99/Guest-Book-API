@@ -21,6 +21,10 @@ const upload = multer({
 
 // Publish a new post
 const publishPost = CatchAsync(async (req, res, next) => {
+  /*
+    #swagger.tags = ['Post']
+    #swagger.description = 'Publish Post'
+  */
   const { description } = req.body;
   const userId = req.decodedToken.userId;
 
@@ -32,7 +36,7 @@ const publishPost = CatchAsync(async (req, res, next) => {
     return next(new AppError('Description is required.', 400));
   }
 
-  // Convert uploaded image to base64
+  // Convert upload image to base64
   const imageBuffer = req.file.buffer;
   const mimeType = req.file.mimetype;
   const base64Image = `data:${mimeType};base64,${imageBuffer.toString('base64')}`;
@@ -49,6 +53,10 @@ const publishPost = CatchAsync(async (req, res, next) => {
 
 // Add a comment to a post
 const addComment = CatchAsync(async (req, res, next) => {
+  /*
+    #swagger.tags = ['Post']
+    #swagger.description = 'Add Comment'
+  */
   const { postId } = req.params;
   const { comment } = req.body;
   const userId = req.decodedToken.userId;
@@ -68,8 +76,12 @@ const addComment = CatchAsync(async (req, res, next) => {
   return res.status(201).send({ message: 'Comment added successfully.', data: post });
 }, 'PostController - addComment');
 
-// Get approved posts with user details
+// Get approved posts
 const getApprovedPosts = CatchAsync(async (req, res, next) => {
+  /*
+    #swagger.tags = ['Post']
+    #swagger.description = 'Get Approved Posts'
+  */
   const posts = await Post.find({ status: 'Approved' })
     .populate('uploadedBy', 'firstName lastName')
     .populate('comments.user', 'firstName lastName')
