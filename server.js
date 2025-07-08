@@ -32,7 +32,7 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 
 app.use(express.static(path.join(dirname, "dist")));
 app.get("/", (req, res) => {
-  const filePath = path.join(dirname, "dist", "build", "index.html");
+  const filePath = path.join(dirname, "dist", "index.html");
 
   res.sendFile(filePath, (err) => {
     if (err) {
