@@ -5,7 +5,7 @@ const doc = {
         title: 'Guest Book',
         description: 'API documentation',
     },
-    host: 'localhost:5500',
+    host: '107.172.143.48:5500',
     basePath: "/api",
     schemes: ['http', 'https'],
 

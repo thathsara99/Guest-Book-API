@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 import fs from 'fs';
 import path from 'path';
 
-const API_URL = process.env.API_URL || 'http://localhost:5500';
+const API_URL = process.env.API_URL || 'http://107.172.143.48:5500';
 const LOG_FILE = path.join(process.cwd(), 'health-logs.json');
 
 async function checkHealth() {
