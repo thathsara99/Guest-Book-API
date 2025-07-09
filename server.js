@@ -26,31 +26,29 @@ app.use(cors({
 }));
 
 app.use('/api', routes);
-app.use('/api-docs', swaggerUi.serveFiles(swaggerDocument), swaggerUi.setup(swaggerDocument, {
-  customSiteTitle: 'Guest Book API Doc',
-}));
+
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
-app.use(express.static(path.join(dirname, "dist")));
-app.get("/", (req, res) => {
-  const filePath = path.join(dirname, "dist", "index.html");
+app.use('/api', routes);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
+  customSiteTitle: 'Guest Book API Doc',
+}));
 
-  res.sendFile(filePath, (err) => {
+// Serve frontend build
+app.use(express.static(path.join(dirname, 'dist')));
+app.get(/^\/(?!api|api-docs).*/, (req, res) => {
+  res.sendFile(path.join(dirname, 'dist', 'index.html'), (err) => {
     if (err) {
-      if (err.code === "ENOENT") {
-        loggerUtil.error(`Build File: index.html not found at ${filePath}`);
-        res.status(404).send("File not found");
-      } else {
-        loggerUtil.error(`Build File Error: ${err.message}`);
-        res.status(500).send("Server error");
-      }
+      loggerUtil.error(`Error serving index.html: ${err.message}`);
+      res.status(500).send("Server error");
     }
   });
 });
+
 
 // Define a simple route
 app.get('/', (req, res) => {

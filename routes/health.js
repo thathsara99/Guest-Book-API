@@ -57,11 +57,7 @@ router.get('/health', async (req, res) => {
 });
 
 // Simple ping endpoint
-router.get('/ping', (req, res) => {
-  /*
-    #swagger.tags = ['Health']
-    #swagger.description = 'Ping'
-  */
+router.get('/ping', (req, res) => { 
   res.status(200).json({ 
     message: 'pong',
     timestamp: new Date().toISOString()
@@ -70,10 +66,6 @@ router.get('/ping', (req, res) => {
 
 // Detailed system info (for debugging)
 router.get('/system', (req, res) => {
-  /*
-    #swagger.tags = ['Health']
-    #swagger.description = 'System Info'
-  */    
   const systemInfo = {
     platform: os.platform(),
     arch: os.arch(),
@@ -92,5 +84,5 @@ router.get('/system', (req, res) => {
   res.status(200).json(systemInfo);
 });
 
-
+ 
 export default router; 
