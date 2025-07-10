@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 
-// Mock dependencies
+// Mock models and services
 jest.mock('../model/User.js');
 jest.mock('../model/Role.js');
 jest.mock('../services/email.js');
@@ -16,17 +16,17 @@ import emailService from '../services/email.js';
 import emailTemplates from '../templates/emailTemplates.js';
 import authController from '../auth/authController.js';
 
-// Create Express app for testing
+
 const app = express();
 app.use(express.json());
 
-// Add routes for testing
+// Testing Routes
 app.post('/login', authController.login);
 app.get('/activate', authController.activateUser);
 app.post('/forgot-password', authController.forgotPassword);
 app.post('/reset-password/:token', authController.resetPassword);
 
-// Add error handling middleware
+// Error Handling
 app.use((err, req, res, next) => {
   res.status(err.statusCode || 500).json({
     message: err.message,
@@ -44,8 +44,8 @@ describe('Auth Controller - Extended Tests', () => {
       _id: new mongoose.Types.ObjectId(),
       firstName: 'John',
       lastName: 'Doe',
-      email: 'john@example.com',
-      password: 'hashedPassword123',
+      email: 'tcroos@gmail.com',
+      password: 'password',
       status: true,
       isLocked: false,
       loginAttempts: 0,
@@ -54,7 +54,7 @@ describe('Auth Controller - Extended Tests', () => {
       save: jest.fn().mockResolvedValue(true)
     };
 
-    // Mock User.findOne to return an object with select method
+    // Mock User.findOne
     User.findOne = jest.fn().mockReturnValue({
       select: jest.fn().mockResolvedValue(mockUser)
     });
@@ -81,7 +81,7 @@ describe('Auth Controller - Extended Tests', () => {
       const response = await request(app)
         .post('/login')
         .send({
-          username: 'john@example.com',
+          username: 'tcroos@gmail.com',
           password: 'password123'
         });
 
@@ -98,7 +98,7 @@ describe('Auth Controller - Extended Tests', () => {
       const response = await request(app)
         .post('/login')
         .send({
-          username: 'john@example.com',
+          username: 'tcroos@gmail.com',
           password: 'password123'
         });
 
@@ -116,7 +116,7 @@ describe('Auth Controller - Extended Tests', () => {
       const response = await request(app)
         .post('/login')
         .send({
-          username: 'john@example.com',
+          username: 'tcroos@gmail.com',
           password: 'wrongpassword'
         });
 
@@ -136,7 +136,7 @@ describe('Auth Controller - Extended Tests', () => {
       const response = await request(app)
         .post('/login')
         .send({
-          username: 'john@example.com',
+          username: 'tcroos@gmail.com',
           password: 'wrongpassword'
         });
 
@@ -155,7 +155,7 @@ describe('Auth Controller - Extended Tests', () => {
       const response = await request(app)
         .post('/login')
         .send({
-          username: 'john@example.com',
+          username: 'tcroos@gmail.com',
           password: 'password123'
         });
 
@@ -182,7 +182,7 @@ describe('Auth Controller - Extended Tests', () => {
 
       const response = await request(app)
         .get('/activate')
-        .query({ email: 'john@example.com' });
+        .query({ email: 'tcroos@gmail.com' });
 
       expect(response.status).toBe(200);
       expect(response.body.message).toBe('User is already active.');
@@ -207,7 +207,7 @@ describe('Auth Controller - Extended Tests', () => {
 
       const response = await request(app)
         .post('/forgot-password')
-        .send({ email: 'john@example.com' });
+        .send({ email: 'tcroos@gmail.com' });
 
       expect(response.status).toBe(500);
     });

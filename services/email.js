@@ -16,12 +16,12 @@ const sendEmail = async (senderEmail, recipientEmail, subject, htmlContent) => {
       service: 'gmail',
       host: 'smtp.gmail.com',
       port: 587,
-      secure: false, // True for 465, false for other ports like 587
+      secure: false, 
       auth: {
         user: process.env.EMAIL_USERNAME,
         pass: process.env.EMAIL_PASSWORD,
       },
-      // later we need to remove this part
+      // later I need to remove this part
       tls: {
         rejectUnauthorized: false
       }

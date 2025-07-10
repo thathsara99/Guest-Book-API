@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 
-// Mock dependencies
+// Mock models and services
 jest.mock('../model/User.js');
 jest.mock('../model/Role.js');
 jest.mock('../services/email.js');
@@ -16,11 +16,11 @@ import emailService from '../services/email.js';
 import emailTemplates from '../templates/emailTemplates.js';
 import authController from '../auth/authController.js';
 
-// Create Express app for testing
+
 const app = express();
 app.use(express.json());
 
-// Add routes for testing
+// routes
 app.post('/login', authController.login);
 app.get('/activate', authController.activateUser);
 app.post('/forgot-password', authController.forgotPassword);
@@ -54,7 +54,7 @@ describe('Auth Controller', () => {
       save: jest.fn().mockResolvedValue(true)
     };
 
-    // Mock User.findOne to return an object with select method
+    // Mock User.findOne 
     User.findOne = jest.fn().mockReturnValue({
       select: jest.fn().mockResolvedValue(mockUser)
     });

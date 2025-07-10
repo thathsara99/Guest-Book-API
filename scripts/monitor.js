@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 
 import fetch from 'node-fetch';
 import fs from 'fs';
@@ -61,7 +60,7 @@ async function checkHealth() {
     logs.push(logEntry);
     fs.writeFileSync(LOG_FILE, JSON.stringify(logs, null, 2));
     
-    console.log(`❌ ${timestamp} - Error: ${error.message}`);
+    console.log(`${timestamp} - Error: ${error.message}`);
     return false;
   }
 }
