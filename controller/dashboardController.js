@@ -65,6 +65,10 @@ const getAllPosts = CatchAsync(async (req, res, next) => {
 }, 'DashboardController - getAllPosts');
 
 const getAllComments = CatchAsync(async (req, res, next) => {
+  /*
+    #swagger.tags = ['Dashboard']
+    #swagger.description = 'Get All Comments'
+  */
   const posts = await Post.find()
     .populate('uploadedBy', 'firstName lastName')
     .populate('comments.user', 'firstName lastName')

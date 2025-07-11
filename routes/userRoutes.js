@@ -9,6 +9,7 @@ router.post('/profile/:id/picture', authMiddleware.verifyToken, userController.u
 router.put('/:id', authMiddleware.verifyToken, userController.updateUser);
 router.patch('/:id/status', authMiddleware.verifyToken, userController.updateUserStatus);
 router.delete('/:id', authMiddleware.verifyToken, userController.deleteUser);
+router.get('/', authMiddleware.verifyToken, userController.getAllUsers);
 router.get('/:id/profile-picture', authMiddleware.verifyToken, userController.getUserProfilePicture);
 router.get('/:id', authMiddleware.verifyToken, userController.getUserById);
 

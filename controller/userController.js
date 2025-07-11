@@ -178,6 +178,18 @@ const getUserById = CatchAsync(async (req, res, next) => {
   });
 }, 'UserController - getUserById');
 
+// Fetch All Users
+const getAllUsers = CatchAsync(async (req, res, next) => {
+  /*
+    #swagger.tags = ['User']
+    #swagger.description = 'Fetch all users'
+  */
+  const users = await User.find().select('-password -__v');
+  return res.status(200).send({
+    message: 'All users fetched successfully.',
+    data: users
+  });
+}, 'UserController - getAllUsers');
 
 const userController = {
 registerUser,
@@ -187,6 +199,7 @@ deleteUser,
 getUserProfilePicture,
 getUserById,
 uploadUserProfilePicture,
-uploadProfilePic
+uploadProfilePic,
+getAllUsers
 };
 export default userController;
